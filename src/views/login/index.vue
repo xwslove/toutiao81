@@ -1,15 +1,15 @@
 <template>
-  <div class="home">
-    home
+  <div>
+      登录页面
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'home',
-  components: {
 
-  }
 }
 </script>
+
+<style>
+
+</style>
