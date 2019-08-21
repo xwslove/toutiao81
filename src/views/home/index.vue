@@ -1,10 +1,27 @@
 <template>
-  <div>home</div>
+  <!-- 最外层容器 -->
+  <el-container>
+    <!-- 侧边栏容器 -->
+    <el-aside style="width:200px;height:100vh;background-color:#323745">
+      <!-- 左侧内容 -->
+      <layout-aside></layout-aside>
+    </el-aside>
+    <!-- 嵌套大容器 -->
+   <el-container>
+     <!-- 头部内容 -->
+     <el-header>头部内容</el-header>
+     <!-- 中间区域 -->
+     <el-main>中间区域</el-main>
+   </el-container>
+  </el-container>
 </template>
 
 <script>
+import layoutAside from '../../components/home/layout-aside'
 export default {
-
+  components: {
+    'layout-aside': layoutAside
+  }
 }
 </script>
 
