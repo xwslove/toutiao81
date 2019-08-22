@@ -15,7 +15,8 @@ export default new Router({
     },
     {
       path: '/',
-      redirect: '/home' },
+      redirect: '/home'
+    },
     {
       path: '/home',
       name: 'home',
@@ -23,15 +24,20 @@ export default new Router({
       children: [{
         path: '',
         component: Main// 默认二级组建
-      }]
+
+      }, {
+        path: '/home/comment', // 评论列表
+        component: () => import('./views/comment')// 按需加载
+      }
+        // {
+        //   path: '/about',
+        //   name: 'about',
+        //   // route level code-splitting
+        //   // this generates a separate chunk (about.[hash].js) for this route
+        //   // which is lazy-loaded when the route is visited.
+        //   // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+        // }
+      ]
     }
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    // }
   ]
 })
