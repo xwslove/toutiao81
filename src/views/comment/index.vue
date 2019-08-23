@@ -26,7 +26,8 @@
      </el-table-column>
    </el-table>
    <el-row type="flex" justufy="center" style="margin:20px 0">
-       <el-pagination
+      <el-col :span="7" :offset="7">
+        <el-pagination
        :page-size="page.pageSize"
         :total="page.total"
         :current-page="page.currentPage"
@@ -34,6 +35,7 @@
         background
         layout="prev, pager, next"
       ></el-pagination>
+      </el-col>
   </el-row>
   </el-card>
 </template>

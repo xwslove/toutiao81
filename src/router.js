@@ -26,10 +26,10 @@ export default new Router({
         component: Main// 默认二级组建
 
       }, {
-        path: '/home/comment', // 评论列表
+        path: 'comment', // 评论列表
         component: () => import('./views/comment')// 按需加载
       }, {
-        path: '/home/material', // 素材列表
+        path: 'material', // 素材列表
         component: () => import('./views/material')// 按需加载写法
       }
         // {
