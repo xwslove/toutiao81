@@ -1,9 +1,9 @@
 <template>
-  <el-card>
+  <el-card v-loading="loading">
     <!-- el-card 具名插槽 header -->
-    <bread-crumb slot='header'>
+    <bread-crumb slot="header">
     <!-- 面包屑的插槽 具名插槽  title-->
-      <template slot='title'>评论列表</template>
+      <template slot="title">评论列表</template>
    </bread-crumb>
    <!-- 表格组件 -->
    <!-- <el-table :data="list">
@@ -25,16 +25,40 @@
 </template>
      </el-table-column>
    </el-table>
+   <el-row type="flex" justufy="center" style="margin:20px 0">
+       <el-pagination
+       :page-size="page.pageSize"
+        :total="page.total"
+        :current-page="page.currentPage"
+        @current-change="changePage"
+        background
+        layout="prev, pager, next"
+      ></el-pagination>
+  </el-row>
   </el-card>
 </template>
 <script>
 export default {
   data () {
     return {
-      list: []
+      list: [],
+      // 分页信息
+      // 当前页码 每页多少条
+      page: {
+        pageSize: 10,
+        total: 0,
+        currentPage: 1
+      },
+      loading: false
     }
   },
   methods: {
+    // 页码改变时触发
+    changePage (newPage) {
+      // 用最新页面查询
+      this.page.currentPage = newPage// 当前最新页码赋值给data中的变量
+      this.getComments()// 获取当前newPage的数据
+    },
     // 打开或者关闭
     closeOrOpen (row) {
       let mess = row.comment_status ? '关闭' : '打开'
@@ -56,13 +80,19 @@ export default {
     // axios 中 有一个对象存储的就是query参数  params
     // axios 中 有一个对象存储的就是body参数  data
     getComments () {
+      this.loading = true// 将加速进度设置状态
+      let pageParams = { page: this.page.currentPage,
+        per_page: this.page.pageSize }// 页码参数
       this.$axios({
         url: '/articles',
         params: {
-          response_type: 'comment' // 查询评论相关的数据
+          response_type: 'comment', // 查询评论相关的数据
+          ...pageParams
         }
       }).then(result => {
         this.list = result.data.results // 取到列表数据 给 当前的数据对象
+        this.page.total = result.data.total_count// 文章评论列表总数
+        this.loading = false// 关闭加载进度
       })
     },
     // row 当条数据对象
@@ -78,7 +108,7 @@ export default {
   },
   // 创建实例之后执行
   created () {
-    this.getComments()
+    this.getComments()// 页面刚进入时查询 应该查询第一页的数据
   }
 }
 </script>
