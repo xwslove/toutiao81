@@ -17,17 +17,12 @@
       </el-form-item>
       <el-form-item label="频道列表">
         <el-select @change='refreshList' v-model="formData.channel_id" placeholder="请选择">
-          <el-option
-            v-for="item in channels"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-          ></el-option>
+          <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="时间选择">
         <el-date-picker
-        @change='refreshList'
+          @change='refreshList'
           value-format="yyyy-MM-dd"
           v-model="formData.dateRange"
           type="daterange"
@@ -65,6 +60,9 @@
         </div>
       </div>
     </div>
+    <el-row type="flex" justify="center" style="margin:20px 0">
+      <el-pagination @current-change="changePage" :current-page="page.currentPage" :page-size="page.pageSize" background layout="prev, pager, next" :total="page.total"></el-pagination>
+    </el-row>
   </el-card>
 </template>
 
@@ -81,13 +79,15 @@ export default {
 
       list: [], // 内容列表
       page: {
-        total: 0
+        total: 0,
+        pageSize: 10,
+        currentPage: 1
       }
     }
   },
   methods: {
-    // 刷新列表数据 状态改变/频道切换/日期改变 都会触发
-    refreshList () {
+    // 获取条件A转态改变—+B频道切换 —+c日期改变
+    getConditions () {
       let { status, channel_id: cid, dateRange } = this.formData// 解构赋值
       let params = {
         status: status === 5 ? null : status, // 由于默认给了5 但是如果是5的话  不能传 所以这里特殊处理一下
@@ -96,7 +96,20 @@ export default {
         begin_pubdate: dateRange && dateRange.length ? dateRange[0] : null,
         end_pubdate: dateRange && dateRange.length > 1 ? dateRange[1] : null
       }
-      this.getArticles(params)// 调用查询接口 传入参数
+      params.page = this.page.currentPage
+      params.per_page = this.page.pageSize
+      return params
+    },
+    // 页码改变事件
+    changePage (newPage) {
+      this.page.currentPage = newPage// 获取当前最新页码
+      // 如果点击了第二页 但是 有条件 所以需要把所有条件都加到一起 发送给方法
+      this.getArticles(this.getConditions())// 查询数据
+    },
+    refreshList () {
+      // 当筛选条件改变时，应该将页码回归第一页
+      this.page.currentPage = 1
+      this.getArticles(this.getConditions())// 调用查询接口传入参数
     },
     // 获取文章
     getArticles (params) {
@@ -146,7 +159,7 @@ export default {
     }
   },
   created () {
-    this.getArticles()// 获取文章列表
+    this.getArticles({ page: 1, per_page: 10 })// 获取文章列表
     this.getChannels()// 获取频道分类
   }
 }
