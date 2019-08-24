@@ -31,6 +31,9 @@ export default new Router({
       }, {
         path: 'material', // 素材列表
         component: () => import('./views/material')// 按需加载写法
+      }, {
+        path: 'articles', // 内容列表
+        component: () => import('./views/articles')// 按需加载写法
       }
         // {
         //   path: '/about',
