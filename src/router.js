@@ -34,6 +34,9 @@ export default new Router({
       }, {
         path: 'articles', // 内容列表
         component: () => import('./views/articles')// 按需加载写法
+      }, {
+        path: 'publish', // 发表文章
+        component: () => import('./views/publish')
       }
         // {
         //   path: '/about',
