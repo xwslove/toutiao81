@@ -3,6 +3,10 @@
       <bread-crumb slot="header">
       <!-- 具名插槽 -->
       <template slot="title">
+        <!-- 放置了一个上传组件 -->
+        <el-upload :show-file-list="false" action="" :http-request="uploadImg" class='upload-material'>
+          <el-button type="primary">上传图片</el-button>
+        </el-upload>
       <!-- el-tabs中v-model属性绑定当前标签页 -->
       <el-tabs v-model="activeName" @tab-click='changeTab'>
         <el-tab-pane label="全部图片" name="all">
@@ -66,6 +70,20 @@ export default {
     }
   },
   methods: {
+    // 自定义上传方法
+    uploadImg (params) {
+      // formdata参数
+      // forData添加参数 用append方法
+      let formData = new FormData()
+      formData.append('image', params.file)
+      this.$axios({
+        method: 'post',
+        url: '/user/images',
+        data: formData
+      }).then(result => {
+        this.getMaterial()// 重新获取数据
+      })
+    },
     // 收藏或者取消
     collectOrCancel (item) {
       // is_collected  是否是收藏 如果is_collected为true  则表示已经收藏 这时点击时  应该取消
@@ -123,6 +141,11 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.upload-material{
+  position:absolute;
+  right: 20px;
+  margin-top:-10px;
+}
 .img-list {
   display: flex;
   justify-content: space-around;
