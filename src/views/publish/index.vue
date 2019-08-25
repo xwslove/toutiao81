@@ -61,10 +61,12 @@ export default {
     publish (draft) {
       this.$refs.myForm.validate((isOK) => {
         if (isOK) {
-          // 发表文章
+          let { articleId } = this.$route.params
+          let method = articleId ? 'put' : 'post'// 根据文章id确定是编辑还是新增
+          let url = articleId ? `articles/${articleId}` : '/articles'// 根据id确定当前请求地址
           this.$axios({
-            method: 'post',
-            url: '/articles',
+            method,
+            url,
             params: { draft }, // 是否为草稿
             data: this.formData
           }).then(() => {
