@@ -13,6 +13,6 @@ export default {
     Vue.component('layout-header', layoutHeader)// 注册layoutheader组建
     Vue.component('layout-aside', layoutAside)// 注册左侧组建
     Vue.component('bread-crumb', breadCrumb)// 注册面包屑组件
-    Vue.component('qull-editor', quillEditor)// 注册quill组件成为全局对象
+    Vue.component('quill-editor', quillEditor)// 注册quill组件成为全局对象
   }
 }
