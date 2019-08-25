@@ -6,6 +6,7 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
+import coverImg from './publish/cover-image'
 // ElementUI导出的对象 对象里有一个办法
 // vue.use(elementUI)=>调用其提供的install反法
 export default {
@@ -14,5 +15,6 @@ export default {
     Vue.component('layout-aside', layoutAside)// 注册左侧组建
     Vue.component('bread-crumb', breadCrumb)// 注册面包屑组件
     Vue.component('quill-editor', quillEditor)// 注册quill组件成为全局对象
+    Vue.component('cover-image', coverImg)
   }
 }
