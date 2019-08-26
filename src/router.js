@@ -40,6 +40,9 @@ export default new Router({
       }, {
         path: '/home/publish/:articleId', // 编辑文章 动态路由
         component: () => import('./views/publish')// 按需加载写法
+      }, {
+        path: 'account', // 账户信息
+        component: () => import('./views/account')
       }
         // {
         //   path: '/about',
