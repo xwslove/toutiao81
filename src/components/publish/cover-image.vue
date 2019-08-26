@@ -13,7 +13,7 @@
 <script>
 // images 会根据type的变化而变化吗 [] ['']  ['','','']
 export default {
-  props: ['type', 'images'],
+  props: ['images'],
   data () {
     return {
       selectIndex: -1,
