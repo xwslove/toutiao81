@@ -9,6 +9,10 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '*',
+      component: () => import('./views/404')
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login
